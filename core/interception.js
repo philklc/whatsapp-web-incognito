@@ -8,6 +8,7 @@ var exceptionsList = [];
 var blinkingChats = {};
 var chats = {};
 var blockedChats = {};
+var battStr;
 
 // ---------------------
 // Actual interception
@@ -93,6 +94,21 @@ wsHook.after = function(messageEvent, url)
                     console.log(node);
                 }
 
+                if (node[0] == 'action' && !!node[2] && !!node[2][0] && !!node[2][0][0] && node[2][0][0] == 'battery') {
+                    var battStr = node[2][0][1].value + '%';
+                    var prefixStr = '';
+                    var statusArr = [];
+                    if (node[2][0][1].live == 'true') statusArr.push('charging');
+                    if (node[2][0][1].powersave == 'true') statusArr.push('powersave');
+                    if (statusArr.length > 0) {
+                        prefixStr = '(' + statusArr.join(', ') + ') ';
+                    }
+                    battStr = prefixStr + node[2][0][1].value + '%';
+                    if (document.getElementById('battIndicator')) {
+                        document.getElementById('battIndicator').innerHTML = battStr;
+                    }
+                }
+
                 var isAllowed = NodeHandler.isReceivedNodeAllowed(node, tag);
                 if (isAllowed) resolve(messageEvent);
                 else resolve(null);
@@ -118,6 +134,8 @@ wsHook.after = function(messageEvent, url)
             if (WAdebugMode) console.log("[In] Received message with tag '" + tag +"':");
             if (data != "" && WAdebugMode)
                 console.log(data);
+            if (data[0] == 'Conn')
+                battStr = (data[1].plugged == true ? '(plugged) ' : '')+ data[1].battery + '%';
 
             resolve(messageEvent);
         }
@@ -862,6 +880,7 @@ document.addEventListener('onIncognitoOptionsClosed', function(e)
 
 document.addEventListener('onMainUIReady', function(e)
 {
+    addBatteryIndicator();
     exposeWhatsAppAPI();
 });
 
@@ -915,6 +934,15 @@ function exposeWhatsAppAPI()
     {
         console.error("WhatsAppWebIncognito: Can't find the WhatsApp API. Sending read receipts might not work.");
     }
+}
+
+function addBatteryIndicator()
+{
+    var div = document.createElement('div');
+    div.setAttribute('id', 'battIndicator');
+    div.setAttribute('style', 'position: fixed; top: 0px; right: 0px; font-size: .75em; color: #000; z-index: 1000');
+    div.innerHTML = battStr ? battStr : '?%';
+    document.getElementById('side').appendChild(div);
 }
 
 function fixCSSPositionIfNeeded(drop)

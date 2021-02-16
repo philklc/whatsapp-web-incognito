@@ -1,12 +1,11 @@
-# Invisible mode for WhatsApp Web
-This is the source code of a chrome extension that disables read receipts and presence updates on WhatsApp Web.
-You can find the original extension in [Chrome Web Store](https://chrome.google.com/webstore/detail/waincognito/alhmbbnlcggfcjjfihglopfopcbigmil).
+# Fork of WAIncognito
+This is a fork of the [browser extension WAIncognito from tomer8007](https://github.com/tomer8007/whatsapp-web-incognito).
+In addition to disabling read receipts and presence updates on WhatsApp Web, this also adds a battery percentage indicator.
 
-<img src="https://raw.githubusercontent.com/tomer8007/whatsapp-web-incognito/master/promotion.jpg" >
+<img src="https://raw.githubusercontent.com/philklc/whatsapp-web-incognito/master/promotion.jpg" >
 
 ## Installing from GitHub directly
-To install the extension off-store, download the latest release as a zip file from the [Releases](https://github.com/tomer8007/whats-incognito/releases) page, 
-**extract its content to a directory** and add it to Chrome using the 'Load unpacked extension' option when developer mode is turned on.
+To install, clone this repository into a directory, and add it to Chrome using the 'Load unpacked extension' option when developer mode is turned on.
 
 ## How it works
 This extension works by intercepting the WebSocket frames between chrome and WhatsApp's servers using a modified `WebSocket` constructor (see [wsHook](https://github.com/skepticfx/wshook)). 
@@ -14,6 +13,10 @@ This extension works by intercepting the WebSocket frames between chrome and Wha
 Those frames are then decrypted if needed using the local encryption keys (stored in `localStorage`), and decoded from a binary form using a javascript code from WhatsApp's original implementation. 
 
 The resulting "nodes" are then simply checked to see if WhatsApp tries to send out a `read`  or `presence` action, and if so, the extension blocks it and fakes a failure response from the server.
+
+#### Battery status
+WhatsApp Web receives the battery percentage of the device upon initial connection and periodically to determine whether to display a "Phone Battery Low" message or not. This fork displays the raw battery percentage and charging status at all times.
+
 ## Organization & Internals
 The main code of the extension is located in `core/interception.js` and in `core/ui.js`. 
 
