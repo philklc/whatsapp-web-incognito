@@ -940,7 +940,7 @@ function addBatteryIndicator()
 {
     var div = document.createElement('div');
     div.setAttribute('id', 'battIndicator');
-    div.setAttribute('style', 'position: fixed; top: 0px; right: 0px; font-size: .75em; color: #000; z-index: 1000');
+    div.setAttribute('style', 'position: fixed; top: 0px; right: 0px; font-size: .75em; color: var(--primary-strong); z-index: 1000');
     div.innerHTML = battStr ? battStr : '?%';
     document.getElementById('side').appendChild(div);
 }
