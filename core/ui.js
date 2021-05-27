@@ -86,12 +86,15 @@ function addIconIfNeeded()
     var firstMenuItem = document.getElementsByClassName(UIClassNames.MENU_ITEM_CLASS)[0];
     if (firstMenuItem != undefined)
     {
-        var menuItemElem = document.createElement("div");
-        menuItemElem.setAttribute("class", UIClassNames.MENU_ITEM_CLASS + " menu-item-incognito");
+        var menuItemElem = (new DOMParser()).parseFromString(firstMenuItem.outerHTML, "text/html").body.firstChild;
+        menuItemElem.classList.add("menu-item-incognito");
+        var buttonElem = menuItemElem.querySelector("[role=button]");
+        buttonElem.textContent = "";
+        buttonElem.setAttribute("title", "Incognito options");
+        buttonElem.setAttribute("aria-label", "Incognito options");
         var iconElem = document.createElement("button");
         iconElem.setAttribute("class", "icon icon-incognito");
-        iconElem.setAttribute("title", "Incognito options");
-        menuItemElem.appendChild(iconElem);
+        buttonElem.appendChild(iconElem);
         firstMenuItem.parentElement.insertBefore(menuItemElem, firstMenuItem);
         
         browser.runtime.sendMessage({ name: "getOptions" }, function (options)

@@ -1,14 +1,8 @@
 
 /* CSS Document */
 
-.menu-item-incognito
-{
-    cursor: pointer !important;
-}
-
 .icon-incognito
 {
-    cursor: pointer !important;
     background-color: var(--panel-header-icon);
     -webkit-mask-image: url(chrome-extension://__MSG_@@extension_id__/images/incognito_gray.svg);
     -webkit-mask-size: 21px 21px;
