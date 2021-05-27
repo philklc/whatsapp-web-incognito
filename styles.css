@@ -8,18 +8,23 @@
 
 .icon-incognito
 {
-    background-image: url(chrome-extension://__MSG_@@extension_id__/images/incognito_gray.svg) !important;
-	background-repeat: no-repeat;
-    background-position: 1px 1px !important;
-    background-size: 21px 21px !important;
     cursor: pointer !important;
-	width: 24px;
-	height: 24px;
+    background-color: var(--panel-header-icon);
+    -webkit-mask-image: url(chrome-extension://__MSG_@@extension_id__/images/incognito_gray.svg);
+    -webkit-mask-size: 21px 21px;
+    -webkit-mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    mask-image: url(chrome-extension://__MSG_@@extension_id__/images/incognito_gray.svg);
+    mask-size: 21px 21px;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
 }
 
 @supports (-moz-appearance:none) {
     .icon-incognito {
-        background-image: url(moz-extension://__MSG_@@extension_id__/images/incognito_gray.svg) !important;
+        mask-image: url(moz-extension://__MSG_@@extension_id__/images/incognito_gray.svg);
     }
 }
 
@@ -42,14 +47,14 @@
 
 .incognito-options-container
 {
-    background-color: #fff !important;
+    background-color: var(--dropdown-background) !important;
     padding: 9px 0 !important;
     font-family: Roboto, sans-serif !important;
     font-size: 14.5px !important;
-    color: #444 !important;
+    color: var(--primary) !important;
     max-width: 500px !important;
     border-radius: 3px !important;
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26), 0 2px 10px 0 rgba(0, 0, 0, 0.16) !important;
+    box-shadow: 0 2px 5px 0 rgba(var(--shadow-rgb), 0.26), 0 2px 10px 0 rgba(var(--shadow-rgb), 0.16) !important;
 }
 
 .incognito-options-title
@@ -66,7 +71,7 @@
 
 .incognito-options-item:hover
 { 
-    background-color: #f4f4f4 !important;
+    background-color: var(--dropdown-background-hover) !important;
 }
 
 .incognito-options-description
@@ -201,10 +206,10 @@
   height: 15px;
   width: 15px;
   transition: all 0.15s ease-out 0s;
-  background: #cbd1d8;
+  background: var(--panel-header-icon);
   top: 3px;
   border: none;
-  color: #fff;
+  color: var(--primary-strong);
   cursor: pointer;
   display: inline-block;
   margin-right: 0.5rem;
@@ -213,11 +218,8 @@
   z-index: 1000;
   border-radius: 50%;
 }
-.radio-input:hover {
-  background: #9faab7;
-}
 .radio-input:checked {
-  background: #40e0d0;
+  background: var(--checkbox-background);
 }
 .radio-input:checked::before {
   height: 15px;
@@ -233,7 +235,7 @@
   -webkit-animation: click-wave 0.65s;
   -moz-animation: click-wave 0.65s;
   animation: click-wave 0.65s;
-  background: #40e0d0;
+  background: var(--checkbox-background);
   content: '';
   display: block;
   position: relative;
